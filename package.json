@@ -1,0 +1,14 @@
+{
+  "name": "fix-pnpm-version",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": "./index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "load-json-file": "^7.0.1",
+    "pkg-dir": "^8.0.0",
+    "write-json-file": "^5.0.0"
+  }
+}
