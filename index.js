@@ -17,7 +17,7 @@ const pnpmPackageManager = 'pnpm@'
 async function getNodeVersion() {
   const { stdout } = await exec("node --version")
   if (!stdout) throw new Error("No global node.")
-  return stdout.slice(1)
+  return stdout.slice(1, -1)
 }
 
 async function updatePackage() {
