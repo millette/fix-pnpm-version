@@ -41,7 +41,7 @@ async function updatePackage() {
     return fn
   }
 
-  nodeVersion = await getNodeVersion()
+  const nodeVersion = await getNodeVersion()
   json.engines.node = `${comp}${nodeVersion}`
   json.engines.pnpm = `${comp}${currentVersion}`
   json.packageManager = `${pnpmPackageManager}${currentVersion}`
