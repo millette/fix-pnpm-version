@@ -13,7 +13,14 @@ const exec = promisify(childProcess.exec)
 const re = /(.+)(\d+\.\d+\.\d+)/
 const pnpmPackageManager = 'pnpm@'
 
-async function xxx() {
+
+async function getNodeVersion() {
+  const { stdout } = await exec("node --version")
+  if (!stdout) throw new Error("No global node.")
+  return stdout.slice(1)
+}
+
+async function updatePackage() {
   const { stdout } = await exec("pnpm --version")
   if (!stdout) throw new Error("No global pnpm.")
   const currentVersion = stdout.trim()
@@ -29,15 +36,22 @@ async function xxx() {
   const [, isPnpm, version] = json.packageManager.match(re)
   if (isPnpm !== pnpmPackageManager) throw new Error("Not pnpm.")
   if (version0 !== version) throw new Error("pnpm version mismatch.")
-  if (currentVersion === version) throw new Error("Already using current pnpm version, nothing to do.")
+  if (currentVersion === version) {
+    console.error("Already using current pnpm version, nothing to do.")
+    return fn
+  }
+
+  nodeVersion = await getNodeVersion()
+  json.engines.node = `${comp}${nodeVersion}`
   json.engines.pnpm = `${comp}${currentVersion}`
   json.packageManager = `${pnpmPackageManager}${currentVersion}`
+  if (json.preinstall === "npx -y only-allow pnpm") delete json.preinstall
   await writeJsonFile(fn, json, { detectIndent: true })
   return fn
 }
 
 try {
-  const fn = await xxx()
+  const fn = await updatePackage()
   console.log("Updated", fn)
 } catch (e) {
   console.error(e)
