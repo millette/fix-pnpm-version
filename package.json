@@ -3,14 +3,14 @@
   "version": "0.2.2",
   "type": "module",
   "bin": "./index.js",
-  "packageManager": "pnpm",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "echo no build, continue."
+    "build": "echo no build, continue.",
+    "check": "echo no check, continue."
   },
   "dependencies": {
     "load-json-file": "^7.0.1",
     "pkg-dir": "^8.0.0",
-    "write-json-file": "^5.0.0"
+    "write-json-file": "^6.0.0"
   }
 }
